@@ -1,0 +1,272 @@
+CCS PCH C Compiler, Version 4.140, 22098               10-nov-14 09:22
+
+               Filename:   D:\Projetos\Comm\slave.lst
+
+               ROM used:   852 bytes (3%)
+                           Largest free fragment is 31916
+               RAM used:   30 (2%) at main() level
+                           38 (2%) worst case
+               Stack:     2 locations
+
+*
+0000:  GOTO   0280
+.................... #include<18F252.h> 
+.................... //////// Standard Header file for the PIC18F252 device //////////////// 
+.................... #device PIC18F252 
+.................... #list 
+....................  
+....................  
+.................... #fuses HS 
+.................... #use delay(clock=8MHz) 
+0258:  CLRF   FEA
+025A:  MOVLW  1E
+025C:  MOVWF  FE9
+025E:  MOVF   FEF,W
+0260:  BZ    027C
+0262:  MOVLW  02
+0264:  MOVWF  01
+0266:  CLRF   00
+0268:  DECFSZ 00,F
+026A:  BRA    0268
+026C:  DECFSZ 01,F
+026E:  BRA    0266
+0270:  MOVLW  97
+0272:  MOVWF  00
+0274:  DECFSZ 00,F
+0276:  BRA    0274
+0278:  DECFSZ FEF,F
+027A:  BRA    0262
+027C:  GOTO   0348 (RETURN)
+.................... #use rs232(xmit=PIN_C6, rcv=PIN_C7, baud=9600) 
+....................  
+.................... #include "stdcom.c" 
+.................... /* 
+....................  * stdcom.c 
+....................  * 
+....................  *  Created on: 06/11/2014 
+....................  *      Author: cuki 
+....................  */ 
+....................  
+.................... typedef struct str_com { 
+.................... 	int addr; 
+.................... 	int cmd; 
+.................... 	long data; 
+.................... } com_var; 
+....................  
+.................... typedef union un_com { 
+.................... 	com_var buff; 
+.................... 	int package[sizeof(com_var)]; 
+.................... } un_var; 
+....................  
+.................... int cont; 
+....................  
+.................... int getAddr(un_var in) { 
+.................... 	return in.buff.addr; 
+.................... } 
+....................  
+.................... int getCmd(un_var in) { 
+.................... 	return in.buff.cmd; 
+.................... } 
+....................  
+.................... long getData(un_var in) { 
+.................... 	return in.buff.data; 
+.................... } 
+....................  
+.................... int setAddr(un_var *out, int addrIn) { 
+.................... 	out->buff.addr = addrIn; 
+....................  
+.................... 	return 0; 
+.................... } 
+....................  
+.................... int setCmd(un_var *out, int cmdIn) { 
+.................... 	out->buff.cmd = cmdIn; 
+....................  
+.................... 	return 0; 
+.................... } 
+....................  
+.................... int setData(un_var *out, long dataIn) { 
+.................... 	out->buff.data = dataIn; 
+....................  
+.................... 	return 0; 
+.................... } 
+....................  
+.................... int sendPackage(un_var out) { 
+.................... 	printf("%s\r", out.package); 
+....................  
+.................... 	return 0; 
+.................... } 
+....................  
+.................... int getPackage(int *p, un_var *out) { 
+.................... 	cont = 0; 
+*
+0024:  CLRF   04
+.................... 	while (*p != '\r' && cont <= sizeof(p) + 1) 
+.................... 		out->package[cont++] = *(p++); 
+0026:  MOVFF  1E,03
+002A:  MOVFF  1D,FE9
+002E:  MOVFF  1E,FEA
+0032:  MOVF   FEF,W
+0034:  SUBLW  0D
+0036:  BZ    0078
+0038:  MOVF   04,W
+003A:  SUBLW  03
+003C:  BNC   0078
+003E:  MOVF   04,W
+0040:  INCF   04,F
+0042:  CLRF   03
+0044:  ADDWF  1F,W
+0046:  MOVWF  01
+0048:  MOVF   20,W
+004A:  ADDWFC 03,F
+004C:  MOVFF  01,21
+0050:  MOVFF  03,22
+0054:  MOVFF  1E,03
+0058:  MOVF   1D,W
+005A:  INCF   1D,F
+005C:  BTFSC  FD8.2
+005E:  INCF   1E,F
+0060:  MOVWF  FE9
+0062:  MOVFF  03,FEA
+0066:  MOVFF  FEF,23
+006A:  MOVFF  22,FEA
+006E:  MOVFF  01,FE9
+0072:  MOVFF  23,FEF
+0076:  BRA    0026
+.................... 	return 0; 
+0078:  MOVLW  00
+007A:  MOVWF  01
+.................... } 
+007C:  GOTO   02C2 (RETURN)
+....................  
+....................  
+.................... enum { 
+.................... 	cmd_parar, cmd_subir, cmd_descer 
+.................... }; 
+....................  
+.................... un_var dat; 
+.................... int buff[20]; 
+....................  
+.................... int main(void) { 
+*
+0280:  CLRF   FF8
+0282:  BCF    FD0.7
+0284:  CLRF   FEA
+0286:  CLRF   FE9
+0288:  MOVLW  0C
+028A:  MOVWF  FAF
+028C:  MOVLW  A2
+028E:  MOVWF  FAC
+0290:  MOVLW  90
+0292:  MOVWF  FAB
+0294:  BSF    FC1.0
+0296:  BSF    FC1.1
+0298:  BSF    FC1.2
+029A:  BCF    FC1.3
+....................  
+.................... 	while (TRUE) { 
+.................... 		gets(buff); 
+029C:  CLRF   FEA
+029E:  MOVLW  09
+02A0:  MOVWF  FE9
+02A2:  DECF   FE9,F
+02A4:  BTFSS  F9E.5
+02A6:  BRA    02A4
+02A8:  MOVFF  FAE,FEC
+02AC:  MOVLW  0D
+02AE:  SUBWF  FEF,W
+02B0:  BNZ   02A4
+02B2:  CLRF   FEC
+.................... 		getPackage(buff, &dat); 
+02B4:  CLRF   1E
+02B6:  MOVLW  09
+02B8:  MOVWF  1D
+02BA:  CLRF   20
+02BC:  MOVLW  05
+02BE:  MOVWF  1F
+02C0:  BRA    0024
+.................... 		printf("End: %d\n\r", dat.buff.addr); 
+02C2:  MOVLW  04
+02C4:  MOVWF  FF6
+02C6:  MOVLW  00
+02C8:  MOVWF  FF7
+02CA:  MOVLW  05
+02CC:  MOVWF  1D
+02CE:  RCALL  0080
+02D0:  MOVFF  05,1D
+02D4:  MOVLW  18
+02D6:  MOVWF  1E
+02D8:  RCALL  00C8
+02DA:  MOVLW  0A
+02DC:  BTFSS  F9E.4
+02DE:  BRA    02DC
+02E0:  MOVWF  FAD
+02E2:  MOVLW  0D
+02E4:  BTFSS  F9E.4
+02E6:  BRA    02E4
+02E8:  MOVWF  FAD
+.................... 		printf("Cmd: %d\n\r", dat.buff.cmd); 
+02EA:  MOVLW  0E
+02EC:  MOVWF  FF6
+02EE:  MOVLW  00
+02F0:  MOVWF  FF7
+02F2:  MOVLW  05
+02F4:  MOVWF  1D
+02F6:  RCALL  0080
+02F8:  MOVFF  06,1D
+02FC:  MOVLW  18
+02FE:  MOVWF  1E
+0300:  RCALL  00C8
+0302:  MOVLW  0A
+0304:  BTFSS  F9E.4
+0306:  BRA    0304
+0308:  MOVWF  FAD
+030A:  MOVLW  0D
+030C:  BTFSS  F9E.4
+030E:  BRA    030C
+0310:  MOVWF  FAD
+.................... 		printf("Dat: %ld\n\r", dat.buff.data); 
+0312:  MOVLW  18
+0314:  MOVWF  FF6
+0316:  MOVLW  00
+0318:  MOVWF  FF7
+031A:  MOVLW  05
+031C:  MOVWF  1D
+031E:  RCALL  0080
+0320:  MOVLW  10
+0322:  MOVWF  FE9
+0324:  MOVFF  08,1E
+0328:  MOVFF  07,1D
+032C:  BRA    017A
+032E:  MOVLW  0A
+0330:  BTFSS  F9E.4
+0332:  BRA    0330
+0334:  MOVWF  FAD
+0336:  MOVLW  0D
+0338:  BTFSS  F9E.4
+033A:  BRA    0338
+033C:  MOVWF  FAD
+.................... 		delay_ms(300); 
+033E:  MOVLW  02
+0340:  MOVWF  1D
+0342:  MOVLW  96
+0344:  MOVWF  1E
+0346:  BRA    0258
+0348:  DECFSZ 1D,F
+034A:  BRA    0342
+.................... 	} 
+034C:  BRA    029C
+....................  
+.................... 	return 0; 
+034E:  MOVLW  00
+0350:  MOVWF  01
+.................... } 
+0352:  SLEEP 
+
+Configuration Fuses:
+   Word  1: 2200   HS NOOSCSEN
+   Word  2: 0E0E   PUT BROWNOUT BORV20 NOWDT WDT128
+   Word  3: 0100   CCP2C1
+   Word  4: 0081   STVREN NOLVP NODEBUG
+   Word  5: C00F   NOPROTECT NOCPB NOCPD
+   Word  6: E00F   NOWRT NOWRTC NOWRTB NOWRTD
+   Word  7: 400F   NOEBTR NOEBTRB
