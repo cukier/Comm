@@ -16,8 +16,6 @@ typedef union un_com {
 	int package[sizeof(com_var)];
 } un_var;
 
-int cont;
-
 int getAddr(un_var in) {
 	return in.buff.addr;
 }
@@ -51,12 +49,19 @@ int setData(un_var *out, long dataIn) {
 int sendPackage(un_var out) {
 	printf("%s\r", out.package);
 
-	return 0;
+	return sizeof(com_var);
 }
 
+int __cont;
+
 int getPackage(int *p, un_var *out) {
-	cont = 0;
-	while (*p != '\r' && cont <= sizeof(p) + 1)
-		out->package[cont++] = *(p++);
-	return 0;
+	__cont = 0;
+
+	while (*p != '\r' && __cont <= sizeof(p) + 1)
+		out->package[__cont++] = *(p++);
+
+	if (__cont > sizeof(p) + 1)
+		return 1;
+
+	return __cont;
 }

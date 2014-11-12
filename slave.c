@@ -6,12 +6,13 @@
 
 #include "stdcom.c"
 
-enum {
+typedef enum comandos {
 	cmd_parar, cmd_subir, cmd_descer
-};
+} comando_type;
 
 un_var dat;
 int buff[20];
+int i;
 
 int main(void) {
 
@@ -21,6 +22,8 @@ int main(void) {
 		printf("End: %d\n\r", dat.buff.addr);
 		printf("Cmd: %d\n\r", dat.buff.cmd);
 		printf("Dat: %ld\n\r", dat.buff.data);
+		for (i = 0; i < sizeof(buff); ++i)
+			buff[i] = 0;
 		delay_ms(300);
 	}
 

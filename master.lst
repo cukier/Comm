@@ -1,4 +1,4 @@
-CCS PCH C Compiler, Version 4.140, 22098               10-nov-14 09:22
+CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 
                Filename:   D:\Projetos\Comm\master.lst
 
@@ -58,8 +58,6 @@ CCS PCH C Compiler, Version 4.140, 22098               10-nov-14 09:22
 .................... 	com_var buff; 
 .................... 	int package[sizeof(com_var)]; 
 .................... } un_var; 
-....................  
-.................... int cont; 
 ....................  
 .................... int getAddr(un_var in) { 
 .................... 	return in.buff.addr; 
@@ -132,17 +130,24 @@ CCS PCH C Compiler, Version 4.140, 22098               10-nov-14 09:22
 00AA:  BRA    00A8
 00AC:  MOVWF  FAD
 ....................  
-.................... 	return 0; 
-00AE:  MOVLW  00
+.................... 	return sizeof(com_var); 
+00AE:  MOVLW  04
 00B0:  MOVWF  01
 .................... } 
 00B2:  GOTO   011A (RETURN)
 ....................  
+.................... int __cont; 
+....................  
 .................... int getPackage(int *p, un_var *out) { 
-.................... 	cont = 0; 
-.................... 	while (*p != '\r' && cont <= sizeof(p) + 1) 
-.................... 		out->package[cont++] = *(p++); 
-.................... 	return 0; 
+.................... 	__cont = 0; 
+....................  
+.................... 	while (*p != '\r' && __cont <= sizeof(p) + 1) 
+.................... 		out->package[__cont++] = *(p++); 
+....................  
+.................... 	if (__cont > sizeof(p) + 1) 
+.................... 		return 1; 
+....................  
+.................... 	return __cont; 
 .................... } 
 ....................  
 ....................  
