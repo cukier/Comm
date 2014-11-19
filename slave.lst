@@ -1,25 +1,264 @@
-CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
+CCS PCH C Compiler, Version 5.008, 5967               19-nov-14 18:33
 
                Filename:   D:\Projetos\Comm\slave.lst
 
-               ROM used:   892 bytes (3%)
-                           Largest free fragment is 31876
-               RAM used:   32 (2%) at main() level
-                           39 (3%) worst case
-               Stack:     2 locations
+               ROM used:   888 bytes (3%)
+                           Largest free fragment is 31880
+               RAM used:   31 (2%) at main() level
+                           38 (2%) worst case
+               Stack used: 2 locations
+               Stack size: 31
 
 *
 0000:  GOTO   028C
 .................... #include<18F252.h> 
 .................... //////// Standard Header file for the PIC18F252 device //////////////// 
 .................... #device PIC18F252 
+0004:  DATA 45,6E
+0006:  DATA 64,3A
+0008:  DATA 20,25
+000A:  DATA 64,0A
+000C:  DATA 0D,00
+000E:  DATA 43,6D
+0010:  DATA 64,3A
+0012:  DATA 20,25
+0014:  DATA 64,0A
+0016:  DATA 0D,00
+0018:  DATA 44,61
+001A:  DATA 74,3A
+001C:  DATA 20,25
+001E:  DATA 6C,64
+0020:  DATA 0A,0D
+0022:  DATA 00,00
+*
+008C:  TBLRD*+
+008E:  MOVFF  FF6,1E
+0092:  MOVFF  FF7,1F
+0096:  MOVF   FF5,W
+0098:  BTFSS  F9E.4
+009A:  BRA    0098
+009C:  MOVWF  FAD
+009E:  MOVFF  1E,FF6
+00A2:  MOVFF  1F,FF7
+00A6:  DECFSZ 1D,F
+00A8:  BRA    008C
+00AA:  RETURN 0
+00AC:  MOVF   24,W
+00AE:  CLRF   01
+00B0:  SUBWF  23,W
+00B2:  BC    00BA
+00B4:  MOVFF  23,00
+00B8:  BRA    00D2
+00BA:  CLRF   00
+00BC:  MOVLW  08
+00BE:  MOVWF  25
+00C0:  RLCF   23,F
+00C2:  RLCF   00,F
+00C4:  MOVF   24,W
+00C6:  SUBWF  00,W
+00C8:  BTFSC  FD8.0
+00CA:  MOVWF  00
+00CC:  RLCF   01,F
+00CE:  DECFSZ 25,F
+00D0:  BRA    00C0
+00D2:  RETURN 0
+00D4:  MOVLW  20
+00D6:  BTFSS  1E.4
+00D8:  MOVLW  30
+00DA:  MOVWF  1F
+00DC:  MOVFF  1D,00
+00E0:  BTFSS  1D.7
+00E2:  BRA    00F4
+00E4:  COMF   00,F
+00E6:  INCF   00,F
+00E8:  MOVFF  00,1D
+00EC:  MOVLW  2D
+00EE:  MOVWF  1F
+00F0:  BSF    1E.7
+00F2:  BSF    1E.0
+00F4:  MOVF   01,W
+00F6:  MOVFF  1D,23
+00FA:  MOVLW  64
+00FC:  MOVWF  24
+00FE:  RCALL  00AC
+0100:  MOVFF  00,1D
+0104:  MOVLW  30
+0106:  ADDWF  01,W
+0108:  MOVWF  20
+010A:  MOVFF  1D,23
+010E:  MOVLW  0A
+0110:  MOVWF  24
+0112:  RCALL  00AC
+0114:  MOVLW  30
+0116:  ADDWF  00,W
+0118:  MOVWF  22
+011A:  MOVLW  30
+011C:  ADDWF  01,W
+011E:  MOVWF  21
+0120:  MOVFF  1F,00
+0124:  MOVLW  30
+0126:  SUBWF  20,W
+0128:  BZ    0132
+012A:  BSF    1E.1
+012C:  BTFSC  1E.7
+012E:  BSF    1E.2
+0130:  BRA    0156
+0132:  MOVFF  1F,20
+0136:  MOVLW  20
+0138:  MOVWF  1F
+013A:  MOVLW  30
+013C:  SUBWF  21,W
+013E:  BZ    0148
+0140:  BSF    1E.0
+0142:  BTFSC  1E.7
+0144:  BSF    1E.1
+0146:  BRA    0156
+0148:  BTFSS  FD8.2
+014A:  BSF    1E.0
+014C:  BNZ   0156
+014E:  MOVFF  20,21
+0152:  MOVLW  20
+0154:  MOVWF  20
+0156:  BTFSC  1E.2
+0158:  BRA    0164
+015A:  BTFSC  1E.1
+015C:  BRA    016C
+015E:  BTFSC  1E.0
+0160:  BRA    0174
+0162:  BRA    017C
+0164:  MOVF   1F,W
+0166:  BTFSS  F9E.4
+0168:  BRA    0166
+016A:  MOVWF  FAD
+016C:  MOVF   20,W
+016E:  BTFSS  F9E.4
+0170:  BRA    016E
+0172:  MOVWF  FAD
+0174:  MOVF   21,W
+0176:  BTFSS  F9E.4
+0178:  BRA    0176
+017A:  MOVWF  FAD
+017C:  MOVF   22,W
+017E:  BTFSS  F9E.4
+0180:  BRA    017E
+0182:  MOVWF  FAD
+0184:  RETURN 0
+0186:  MOVFF  FEA,25
+018A:  MOVFF  FE9,24
+018E:  BTFSS  1E.7
+0190:  BRA    01A2
+0192:  BSF    24.7
+0194:  BTFSS  24.4
+0196:  INCF   24,F
+0198:  COMF   1D,F
+019A:  COMF   1E,F
+019C:  INCF   1D,F
+019E:  BTFSC  FD8.2
+01A0:  INCF   1E,F
+01A2:  SWAPF  1E,W
+01A4:  IORLW  F0
+01A6:  MOVWF  20
+01A8:  ADDWF  20,F
+01AA:  ADDLW  E2
+01AC:  MOVWF  21
+01AE:  ADDLW  32
+01B0:  MOVWF  23
+01B2:  MOVF   1E,W
+01B4:  ANDLW  0F
+01B6:  ADDWF  21,F
+01B8:  ADDWF  21,F
+01BA:  ADDWF  23,F
+01BC:  ADDLW  E9
+01BE:  MOVWF  22
+01C0:  ADDWF  22,F
+01C2:  ADDWF  22,F
+01C4:  SWAPF  1D,W
+01C6:  ANDLW  0F
+01C8:  ADDWF  22,F
+01CA:  ADDWF  23,F
+01CC:  RLCF   22,F
+01CE:  RLCF   23,F
+01D0:  COMF   23,F
+01D2:  RLCF   23,F
+01D4:  MOVF   1D,W
+01D6:  ANDLW  0F
+01D8:  ADDWF  23,F
+01DA:  RLCF   20,F
+01DC:  MOVLW  07
+01DE:  MOVWF  1F
+01E0:  MOVLW  0A
+01E2:  DECF   22,F
+01E4:  ADDWF  23,F
+01E6:  BNC   01E2
+01E8:  DECF   21,F
+01EA:  ADDWF  22,F
+01EC:  BNC   01E8
+01EE:  DECF   20,F
+01F0:  ADDWF  21,F
+01F2:  BNC   01EE
+01F4:  DECF   1F,F
+01F6:  ADDWF  20,F
+01F8:  BNC   01F4
+01FA:  CLRF   FEA
+01FC:  MOVLW  1F
+01FE:  MOVWF  FE9
+0200:  MOVLW  07
+0202:  ANDWF  24,W
+0204:  BCF    24.6
+0206:  DECF   FE9,F
+0208:  ANDWF  24,W
+020A:  BNZ   021A
+020C:  BTFSC  24.4
+020E:  INCF   FE9,F
+0210:  BTFSC  24.4
+0212:  BRA    021A
+0214:  MOVLW  20
+0216:  MOVWF  00
+0218:  BRA    0252
+021A:  ADDWF  FE9,F
+021C:  MOVLW  23
+021E:  SUBWF  FE9,W
+0220:  BTFSC  FD8.2
+0222:  BSF    24.6
+0224:  MOVF   FEF,W
+0226:  MOVWF  00
+0228:  BNZ   023A
+022A:  BTFSC  24.6
+022C:  BRA    023A
+022E:  BTFSC  24.4
+0230:  BRA    025A
+0232:  BTFSC  24.3
+0234:  BRA    023A
+0236:  MOVLW  20
+0238:  BRA    0250
+023A:  BTFSS  24.7
+023C:  BRA    024A
+023E:  MOVLW  2D
+0240:  MOVWF  00
+0242:  MOVF   FED,W
+0244:  BCF    24.6
+0246:  BCF    24.7
+0248:  BRA    0252
+024A:  BSF    24.3
+024C:  BCF    24.4
+024E:  MOVLW  30
+0250:  ADDWF  00,F
+0252:  MOVF   00,W
+0254:  BTFSS  F9E.4
+0256:  BRA    0254
+0258:  MOVWF  FAD
+025A:  MOVF   FEE,W
+025C:  BTFSS  24.6
+025E:  BRA    021C
+0260:  GOTO   0336 (RETURN)
+....................  
 .................... #list 
 ....................  
 ....................  
 .................... #fuses HS 
 .................... #use delay(clock=8MHz) 
 0264:  CLRF   FEA
-0266:  MOVLW  1F
+0266:  MOVLW  1E
 0268:  MOVWF  FE9
 026A:  MOVF   FEF,W
 026C:  BZ    0288
@@ -36,7 +275,7 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 0282:  BRA    0280
 0284:  DECFSZ FEF,F
 0286:  BRA    026E
-0288:  GOTO   0370 (RETURN)
+0288:  GOTO   036C (RETURN)
 .................... #use rs232(xmit=PIN_C6, rcv=PIN_C7, baud=9600) 
 ....................  
 .................... #include "stdcom.c" 
@@ -46,6 +285,17 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 ....................  *  Created on: 06/11/2014 
 ....................  *      Author: cuki 
 ....................  */ 
+....................  
+.................... #include "stdcom.h" 
+.................... /* 
+....................  * stdcom.h 
+....................  * 
+....................  *  Created on: 19/11/2014 
+....................  *      Author: cuki 
+....................  */ 
+....................  
+.................... #ifndef STDCOM_H_ 
+.................... #define STDCOM_H_ 
 ....................  
 .................... typedef struct str_com { 
 .................... 	int addr; 
@@ -57,6 +307,22 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 .................... 	com_var buff; 
 .................... 	int package[sizeof(com_var)]; 
 .................... } un_var; 
+....................  
+.................... typedef enum comandos { 
+.................... 	cmd_parar, cmd_subir, cmd_descer 
+.................... } comandos_var; 
+....................  
+.................... int getAddr(un_var in); 
+.................... int getCmd(un_var in); 
+.................... long getData(un_var in); 
+.................... int setAddr(un_var *out, int addrIn); 
+.................... int setCmd(un_var *out, int cmdIn); 
+.................... int setData(un_var *out, long dataIn); 
+.................... int sendPackage(un_var out); 
+.................... int getPackage(int *p, un_var *out); 
+....................  
+.................... #endif /* STDCOM_H_ */ 
+....................  
 ....................  
 .................... int getAddr(un_var in) { 
 .................... 	return in.buff.addr; 
@@ -94,38 +360,36 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 .................... 	return sizeof(com_var); 
 .................... } 
 ....................  
-.................... int __cont; 
-....................  
 .................... int getPackage(int *p, un_var *out) { 
-.................... 	__cont = 0; 
 *
-0024:  CLRF   04
+0024:  CLRF   21
+.................... 	int cont = 0; 
 ....................  
-.................... 	while (*p != '\r' && __cont <= sizeof(p) + 1) 
-.................... 		out->package[__cont++] = *(p++); 
-0026:  MOVFF  1F,03
-002A:  MOVFF  1E,FE9
-002E:  MOVFF  1F,FEA
+.................... 	while (*p != '\r' && cont <= sizeof(p) + 1) 
+0026:  MOVFF  1E,03
+002A:  MOVFF  1D,FE9
+002E:  MOVFF  1E,FEA
 0032:  MOVF   FEF,W
 0034:  SUBLW  0D
 0036:  BZ    0078
-0038:  MOVF   04,W
+0038:  MOVF   21,W
 003A:  SUBLW  03
 003C:  BNC   0078
-003E:  MOVF   04,W
-0040:  INCF   04,F
+.................... 		out->package[cont++] = *(p++); 
+003E:  MOVF   21,W
+0040:  INCF   21,F
 0042:  CLRF   03
-0044:  ADDWF  20,W
+0044:  ADDWF  1F,W
 0046:  MOVWF  01
-0048:  MOVF   21,W
+0048:  MOVF   20,W
 004A:  ADDWFC 03,F
 004C:  MOVFF  01,22
 0050:  MOVFF  03,23
-0054:  MOVFF  1F,03
-0058:  MOVF   1E,W
-005A:  INCF   1E,F
+0054:  MOVFF  1E,03
+0058:  MOVF   1D,W
+005A:  INCF   1D,F
 005C:  BTFSC  FD8.2
-005E:  INCF   1F,F
+005E:  INCF   1E,F
 0060:  MOVWF  FE9
 0062:  MOVFF  03,FEA
 0066:  MOVFF  FEF,24
@@ -134,24 +398,20 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 0072:  MOVFF  24,FEF
 0076:  BRA    0026
 ....................  
-.................... 	if (__cont > sizeof(p) + 1) 
-0078:  MOVF   04,W
+.................... 	if (cont > sizeof(p) + 1) 
+0078:  MOVF   21,W
 007A:  SUBLW  03
 007C:  BC    0084
-.................... 		return 1; 
-007E:  MOVLW  01
+.................... 		return -1; 
+007E:  MOVLW  FF
 0080:  MOVWF  01
 0082:  BRA    0088
 ....................  
-.................... 	return __cont; 
-0084:  MOVFF  04,01
+.................... 	return cont; 
+0084:  MOVFF  21,01
+0088:  GOTO   02CA (RETURN)
 .................... } 
-0088:  GOTO   02CE (RETURN)
 ....................  
-....................  
-.................... typedef enum comandos { 
-.................... 	cmd_parar, cmd_subir, cmd_descer 
-.................... } comando_type; 
 ....................  
 .................... un_var dat; 
 .................... int buff[20]; 
@@ -161,133 +421,131 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 *
 028C:  CLRF   FF8
 028E:  BCF    FD0.7
-0290:  CLRF   FEA
-0292:  CLRF   FE9
-0294:  MOVLW  0C
-0296:  MOVWF  FAF
-0298:  MOVLW  A2
-029A:  MOVWF  FAC
-029C:  MOVLW  90
-029E:  MOVWF  FAB
-02A0:  BSF    FC1.0
-02A2:  BSF    FC1.1
-02A4:  BSF    FC1.2
-02A6:  BCF    FC1.3
+0290:  MOVLW  0C
+0292:  MOVWF  FAF
+0294:  MOVLW  A2
+0296:  MOVWF  FAC
+0298:  MOVLW  90
+029A:  MOVWF  FAB
+029C:  BSF    FC1.0
+029E:  BSF    FC1.1
+02A0:  BSF    FC1.2
+02A2:  BCF    FC1.3
 ....................  
 .................... 	while (TRUE) { 
 .................... 		gets(buff); 
-02A8:  CLRF   FEA
-02AA:  MOVLW  09
-02AC:  MOVWF  FE9
-02AE:  DECF   FE9,F
-02B0:  BTFSS  F9E.5
-02B2:  BRA    02B0
-02B4:  MOVFF  FAE,FEC
-02B8:  MOVLW  0D
-02BA:  SUBWF  FEF,W
-02BC:  BNZ   02B0
-02BE:  CLRF   FEC
+02A4:  CLRF   FEA
+02A6:  MOVLW  08
+02A8:  MOVWF  FE9
+02AA:  DECF   FE9,F
+02AC:  BTFSS  F9E.5
+02AE:  BRA    02AC
+02B0:  MOVFF  FAE,FEC
+02B4:  MOVLW  0D
+02B6:  SUBWF  FEF,W
+02B8:  BNZ   02AC
+02BA:  CLRF   FEC
 .................... 		getPackage(buff, &dat); 
-02C0:  CLRF   1F
-02C2:  MOVLW  09
-02C4:  MOVWF  1E
-02C6:  CLRF   21
-02C8:  MOVLW  05
-02CA:  MOVWF  20
-02CC:  BRA    0024
+02BC:  CLRF   1E
+02BE:  MOVLW  08
+02C0:  MOVWF  1D
+02C2:  CLRF   20
+02C4:  MOVLW  04
+02C6:  MOVWF  1F
+02C8:  BRA    0024
 .................... 		printf("End: %d\n\r", dat.buff.addr); 
-02CE:  MOVLW  04
-02D0:  MOVWF  FF6
-02D2:  MOVLW  00
-02D4:  MOVWF  FF7
-02D6:  MOVLW  05
-02D8:  MOVWF  1E
-02DA:  RCALL  008C
-02DC:  MOVFF  05,1E
-02E0:  MOVLW  18
-02E2:  MOVWF  1F
-02E4:  RCALL  00D4
-02E6:  MOVLW  0A
-02E8:  BTFSS  F9E.4
-02EA:  BRA    02E8
-02EC:  MOVWF  FAD
-02EE:  MOVLW  0D
-02F0:  BTFSS  F9E.4
-02F2:  BRA    02F0
-02F4:  MOVWF  FAD
+02CA:  MOVLW  04
+02CC:  MOVWF  FF6
+02CE:  MOVLW  00
+02D0:  MOVWF  FF7
+02D2:  MOVLW  05
+02D4:  MOVWF  1D
+02D6:  RCALL  008C
+02D8:  MOVFF  04,1D
+02DC:  MOVLW  18
+02DE:  MOVWF  1E
+02E0:  RCALL  00D4
+02E2:  MOVLW  0A
+02E4:  BTFSS  F9E.4
+02E6:  BRA    02E4
+02E8:  MOVWF  FAD
+02EA:  MOVLW  0D
+02EC:  BTFSS  F9E.4
+02EE:  BRA    02EC
+02F0:  MOVWF  FAD
 .................... 		printf("Cmd: %d\n\r", dat.buff.cmd); 
-02F6:  MOVLW  0E
-02F8:  MOVWF  FF6
-02FA:  MOVLW  00
-02FC:  MOVWF  FF7
-02FE:  MOVLW  05
-0300:  MOVWF  1E
-0302:  RCALL  008C
-0304:  MOVFF  06,1E
-0308:  MOVLW  18
-030A:  MOVWF  1F
-030C:  RCALL  00D4
-030E:  MOVLW  0A
-0310:  BTFSS  F9E.4
-0312:  BRA    0310
-0314:  MOVWF  FAD
-0316:  MOVLW  0D
-0318:  BTFSS  F9E.4
-031A:  BRA    0318
-031C:  MOVWF  FAD
+02F2:  MOVLW  0E
+02F4:  MOVWF  FF6
+02F6:  MOVLW  00
+02F8:  MOVWF  FF7
+02FA:  MOVLW  05
+02FC:  MOVWF  1D
+02FE:  RCALL  008C
+0300:  MOVFF  05,1D
+0304:  MOVLW  18
+0306:  MOVWF  1E
+0308:  RCALL  00D4
+030A:  MOVLW  0A
+030C:  BTFSS  F9E.4
+030E:  BRA    030C
+0310:  MOVWF  FAD
+0312:  MOVLW  0D
+0314:  BTFSS  F9E.4
+0316:  BRA    0314
+0318:  MOVWF  FAD
 .................... 		printf("Dat: %ld\n\r", dat.buff.data); 
-031E:  MOVLW  18
-0320:  MOVWF  FF6
-0322:  MOVLW  00
-0324:  MOVWF  FF7
-0326:  MOVLW  05
-0328:  MOVWF  1E
-032A:  RCALL  008C
-032C:  MOVLW  10
-032E:  MOVWF  FE9
-0330:  MOVFF  08,1F
-0334:  MOVFF  07,1E
-0338:  BRA    0186
-033A:  MOVLW  0A
-033C:  BTFSS  F9E.4
-033E:  BRA    033C
-0340:  MOVWF  FAD
-0342:  MOVLW  0D
-0344:  BTFSS  F9E.4
-0346:  BRA    0344
-0348:  MOVWF  FAD
+031A:  MOVLW  18
+031C:  MOVWF  FF6
+031E:  MOVLW  00
+0320:  MOVWF  FF7
+0322:  MOVLW  05
+0324:  MOVWF  1D
+0326:  RCALL  008C
+0328:  MOVLW  10
+032A:  MOVWF  FE9
+032C:  MOVFF  07,1E
+0330:  MOVFF  06,1D
+0334:  BRA    0186
+0336:  MOVLW  0A
+0338:  BTFSS  F9E.4
+033A:  BRA    0338
+033C:  MOVWF  FAD
+033E:  MOVLW  0D
+0340:  BTFSS  F9E.4
+0342:  BRA    0340
+0344:  MOVWF  FAD
 .................... 		for (i = 0; i < sizeof(buff); ++i) 
-034A:  CLRF   1D
-034C:  MOVF   1D,W
-034E:  SUBLW  13
-0350:  BNC   0366
+0346:  CLRF   1C
+0348:  MOVF   1C,W
+034A:  SUBLW  13
+034C:  BNC   0362
 .................... 			buff[i] = 0; 
-0352:  CLRF   03
-0354:  MOVF   1D,W
-0356:  ADDLW  09
-0358:  MOVWF  FE9
-035A:  MOVLW  00
-035C:  ADDWFC 03,W
-035E:  MOVWF  FEA
-0360:  CLRF   FEF
-0362:  INCF   1D,F
-0364:  BRA    034C
+034E:  CLRF   03
+0350:  MOVF   1C,W
+0352:  ADDLW  08
+0354:  MOVWF  FE9
+0356:  MOVLW  00
+0358:  ADDWFC 03,W
+035A:  MOVWF  FEA
+035C:  CLRF   FEF
+035E:  INCF   1C,F
+0360:  BRA    0348
 .................... 		delay_ms(300); 
-0366:  MOVLW  02
+0362:  MOVLW  02
+0364:  MOVWF  1D
+0366:  MOVLW  96
 0368:  MOVWF  1E
-036A:  MOVLW  96
-036C:  MOVWF  1F
-036E:  BRA    0264
-0370:  DECFSZ 1E,F
-0372:  BRA    036A
+036A:  BRA    0264
+036C:  DECFSZ 1D,F
+036E:  BRA    0366
+0370:  BRA    02A4
 .................... 	} 
-0374:  BRA    02A8
 ....................  
 .................... 	return 0; 
-0376:  MOVLW  00
-0378:  MOVWF  01
+0372:  MOVLW  00
+0374:  MOVWF  01
 .................... } 
-037A:  SLEEP 
+0376:  SLEEP 
 
 Configuration Fuses:
    Word  1: 2200   HS NOOSCSEN

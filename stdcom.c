@@ -5,16 +5,7 @@
  *      Author: cuki
  */
 
-typedef struct str_com {
-	int addr;
-	int cmd;
-	long data;
-} com_var;
-
-typedef union un_com {
-	com_var buff;
-	int package[sizeof(com_var)];
-} un_var;
+#include "stdcom.h"
 
 int getAddr(un_var in) {
 	return in.buff.addr;
@@ -52,16 +43,14 @@ int sendPackage(un_var out) {
 	return sizeof(com_var);
 }
 
-int __cont;
-
 int getPackage(int *p, un_var *out) {
-	__cont = 0;
+	int cont = 0;
 
-	while (*p != '\r' && __cont <= sizeof(p) + 1)
-		out->package[__cont++] = *(p++);
+	while (*p != '\r' && cont <= sizeof(p) + 1)
+		out->package[cont++] = *(p++);
 
-	if (__cont > sizeof(p) + 1)
-		return 1;
+	if (cont > sizeof(p) + 1)
+		return -1;
 
-	return __cont;
+	return cont;
 }

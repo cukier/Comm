@@ -6,10 +6,6 @@
 
 #include "stdcom.c"
 
-typedef enum comandos {
-	cmd_parar, cmd_subir, cmd_descer
-} comando_type;
-
 un_var dat;
 int buff[20];
 int i;

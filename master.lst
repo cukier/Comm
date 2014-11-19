@@ -1,18 +1,36 @@
-CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
+CCS PCH C Compiler, Version 5.008, 5967               19-nov-14 18:33
 
                Filename:   D:\Projetos\Comm\master.lst
 
-               ROM used:   288 bytes (1%)
-                           Largest free fragment is 32480
-               RAM used:   10 (1%) at main() level
-                           15 (1%) worst case
-               Stack:     2 locations
+               ROM used:   284 bytes (1%)
+                           Largest free fragment is 32484
+               RAM used:   9 (1%) at main() level
+                           14 (1%) worst case
+               Stack used: 2 locations
+               Stack size: 31
 
 *
 0000:  GOTO   00B6
 .................... #include<18F252.h> 
 .................... //////// Standard Header file for the PIC18F252 device //////////////// 
 .................... #device PIC18F252 
+*
+0076:  MOVF   FEF,F
+0078:  BZ    009A
+007A:  MOVFF  FEA,0D
+007E:  MOVFF  FE9,0C
+0082:  MOVF   FEF,W
+0084:  BTFSS  F9E.4
+0086:  BRA    0084
+0088:  MOVWF  FAD
+008A:  MOVFF  0D,FEA
+008E:  MOVFF  0C,FE9
+0092:  INCF   FE9,F
+0094:  BTFSC  FD8.2
+0096:  INCF   FEA,F
+0098:  BRA    0076
+009A:  GOTO   00A6 (RETURN)
+....................  
 .................... #list 
 ....................  
 ....................  
@@ -20,7 +38,7 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 .................... #use delay(clock=8MHz) 
 *
 0004:  CLRF   FEA
-0006:  MOVLW  0A
+0006:  MOVLW  09
 0008:  MOVWF  FE9
 000A:  MOVF   FEF,W
 000C:  BZ    0028
@@ -37,7 +55,7 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 0022:  BRA    0020
 0024:  DECFSZ FEF,F
 0026:  BRA    000E
-0028:  GOTO   00DC (RETURN)
+0028:  GOTO   00D8 (RETURN)
 .................... #use rs232(xmit=PIN_C6, rcv=PIN_C7, baud=9600) 
 ....................  
 .................... #include "stdcom.c" 
@@ -47,6 +65,17 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 ....................  *  Created on: 06/11/2014 
 ....................  *      Author: cuki 
 ....................  */ 
+....................  
+.................... #include "stdcom.h" 
+.................... /* 
+....................  * stdcom.h 
+....................  * 
+....................  *  Created on: 19/11/2014 
+....................  *      Author: cuki 
+....................  */ 
+....................  
+.................... #ifndef STDCOM_H_ 
+.................... #define STDCOM_H_ 
 ....................  
 .................... typedef struct str_com { 
 .................... 	int addr; 
@@ -58,6 +87,22 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 .................... 	com_var buff; 
 .................... 	int package[sizeof(com_var)]; 
 .................... } un_var; 
+....................  
+.................... typedef enum comandos { 
+.................... 	cmd_parar, cmd_subir, cmd_descer 
+.................... } comandos_var; 
+....................  
+.................... int getAddr(un_var in); 
+.................... int getCmd(un_var in); 
+.................... long getData(un_var in); 
+.................... int setAddr(un_var *out, int addrIn); 
+.................... int setCmd(un_var *out, int cmdIn); 
+.................... int setData(un_var *out, long dataIn); 
+.................... int sendPackage(un_var out); 
+.................... int getPackage(int *p, un_var *out); 
+....................  
+.................... #endif /* STDCOM_H_ */ 
+....................  
 ....................  
 .................... int getAddr(un_var in) { 
 .................... 	return in.buff.addr; 
@@ -73,56 +118,56 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 ....................  
 .................... int setAddr(un_var *out, int addrIn) { 
 .................... 	out->buff.addr = addrIn; 
-002C:  MOVF   09,W
+002C:  MOVF   08,W
 002E:  MOVWF  FE9
-0030:  MOVFF  0A,FEA
-0034:  MOVFF  0B,FEF
+0030:  MOVFF  09,FEA
+0034:  MOVFF  0A,FEF
 ....................  
 .................... 	return 0; 
 0038:  MOVLW  00
 003A:  MOVWF  01
+003C:  GOTO   00E8 (RETURN)
 .................... } 
-003C:  GOTO   00EC (RETURN)
 ....................  
 .................... int setCmd(un_var *out, int cmdIn) { 
 .................... 	out->buff.cmd = cmdIn; 
 0040:  MOVLW  01
-0042:  ADDWF  09,W
+0042:  ADDWF  08,W
 0044:  MOVWF  FE9
 0046:  MOVLW  00
-0048:  ADDWFC 0A,W
+0048:  ADDWFC 09,W
 004A:  MOVWF  FEA
-004C:  MOVFF  0B,FEF
+004C:  MOVFF  0A,FEF
 ....................  
 .................... 	return 0; 
 0050:  MOVLW  00
 0052:  MOVWF  01
+0054:  GOTO   00F4 (RETURN)
 .................... } 
-0054:  GOTO   00F8 (RETURN)
 ....................  
 .................... int setData(un_var *out, long dataIn) { 
 .................... 	out->buff.data = dataIn; 
 0058:  MOVLW  02
-005A:  ADDWF  09,W
+005A:  ADDWF  08,W
 005C:  MOVWF  FE9
 005E:  MOVLW  00
-0060:  ADDWFC 0A,W
+0060:  ADDWFC 09,W
 0062:  MOVWF  FEA
-0064:  MOVFF  0C,FEC
+0064:  MOVFF  0B,FEC
 0068:  MOVF   FED,F
-006A:  MOVFF  0B,FEF
+006A:  MOVFF  0A,FEF
 ....................  
 .................... 	return 0; 
 006E:  MOVLW  00
 0070:  MOVWF  01
+0072:  GOTO   0104 (RETURN)
 .................... } 
-0072:  GOTO   0108 (RETURN)
 ....................  
 .................... int sendPackage(un_var out) { 
 .................... 	printf("%s\r", out.package); 
 *
 009E:  CLRF   FEA
-00A0:  MOVLW  09
+00A0:  MOVLW  08
 00A2:  MOVWF  FE9
 00A4:  BRA    0076
 00A6:  MOVLW  0D
@@ -133,91 +178,83 @@ CCS PCH C Compiler, Version 4.140, 22098               12-nov-14 08:47
 .................... 	return sizeof(com_var); 
 00AE:  MOVLW  04
 00B0:  MOVWF  01
+00B2:  GOTO   0116 (RETURN)
 .................... } 
-00B2:  GOTO   011A (RETURN)
-....................  
-.................... int __cont; 
 ....................  
 .................... int getPackage(int *p, un_var *out) { 
-.................... 	__cont = 0; 
+.................... 	int cont = 0; 
 ....................  
-.................... 	while (*p != '\r' && __cont <= sizeof(p) + 1) 
-.................... 		out->package[__cont++] = *(p++); 
+.................... 	while (*p != '\r' && cont <= sizeof(p) + 1) 
+.................... 		out->package[cont++] = *(p++); 
 ....................  
-.................... 	if (__cont > sizeof(p) + 1) 
-.................... 		return 1; 
+.................... 	if (cont > sizeof(p) + 1) 
+.................... 		return -1; 
 ....................  
-.................... 	return __cont; 
+.................... 	return cont; 
 .................... } 
 ....................  
-....................  
-.................... enum { 
-.................... 	cmd_parar, cmd_subir, cmd_descer 
-.................... }; 
 ....................  
 .................... un_var dat; 
 ....................  
 .................... int main(void) { 
 00B6:  CLRF   FF8
 00B8:  BCF    FD0.7
-00BA:  CLRF   FEA
-00BC:  CLRF   FE9
-00BE:  MOVLW  0C
-00C0:  MOVWF  FAF
-00C2:  MOVLW  A2
-00C4:  MOVWF  FAC
-00C6:  MOVLW  90
-00C8:  MOVWF  FAB
-00CA:  BSF    FC1.0
-00CC:  BSF    FC1.1
-00CE:  BSF    FC1.2
-00D0:  BCF    FC1.3
+00BA:  MOVLW  0C
+00BC:  MOVWF  FAF
+00BE:  MOVLW  A2
+00C0:  MOVWF  FAC
+00C2:  MOVLW  90
+00C4:  MOVWF  FAB
+00C6:  BSF    FC1.0
+00C8:  BSF    FC1.1
+00CA:  BSF    FC1.2
+00CC:  BCF    FC1.3
 ....................  
 .................... 	delay_ms(1000); 
-00D2:  MOVLW  04
+00CE:  MOVLW  04
+00D0:  MOVWF  08
+00D2:  MOVLW  FA
 00D4:  MOVWF  09
-00D6:  MOVLW  FA
-00D8:  MOVWF  0A
-00DA:  BRA    0004
-00DC:  DECFSZ 09,F
-00DE:  BRA    00D6
+00D6:  BRA    0004
+00D8:  DECFSZ 08,F
+00DA:  BRA    00D2
 ....................  
 .................... 	setAddr(&dat, 1); 
-00E0:  CLRF   0A
-00E2:  MOVLW  05
-00E4:  MOVWF  09
-00E6:  MOVLW  01
-00E8:  MOVWF  0B
-00EA:  BRA    002C
+00DC:  CLRF   09
+00DE:  MOVLW  04
+00E0:  MOVWF  08
+00E2:  MOVLW  01
+00E4:  MOVWF  0A
+00E6:  BRA    002C
 .................... 	setCmd(&dat, cmd_descer); 
-00EC:  CLRF   0A
-00EE:  MOVLW  05
-00F0:  MOVWF  09
-00F2:  MOVLW  02
-00F4:  MOVWF  0B
-00F6:  BRA    0040
+00E8:  CLRF   09
+00EA:  MOVLW  04
+00EC:  MOVWF  08
+00EE:  MOVLW  02
+00F0:  MOVWF  0A
+00F2:  BRA    0040
 .................... 	setData(&dat, 13580); 
-00F8:  CLRF   0A
-00FA:  MOVLW  05
-00FC:  MOVWF  09
-00FE:  MOVLW  35
-0100:  MOVWF  0C
-0102:  MOVLW  0C
-0104:  MOVWF  0B
-0106:  BRA    0058
+00F4:  CLRF   09
+00F6:  MOVLW  04
+00F8:  MOVWF  08
+00FA:  MOVLW  35
+00FC:  MOVWF  0B
+00FE:  MOVLW  0C
+0100:  MOVWF  0A
+0102:  BRA    0058
 ....................  
 .................... 	sendPackage(dat); 
-0108:  MOVFF  08,0C
-010C:  MOVFF  07,0B
-0110:  MOVFF  06,0A
-0114:  MOVFF  05,09
-0118:  BRA    009E
+0104:  MOVFF  07,0B
+0108:  MOVFF  06,0A
+010C:  MOVFF  05,09
+0110:  MOVFF  04,08
+0114:  BRA    009E
 ....................  
 .................... 	return 0; 
-011A:  MOVLW  00
-011C:  MOVWF  01
+0116:  MOVLW  00
+0118:  MOVWF  01
 .................... } 
-011E:  SLEEP 
+011A:  SLEEP 
 
 Configuration Fuses:
    Word  1: 2200   HS NOOSCSEN

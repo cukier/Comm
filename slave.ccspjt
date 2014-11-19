@@ -1,0 +1,16 @@
+[PROJECT]
+Target=slave.hex
+Processor_Text=PIC18F252
+CCSVersion=5.008
+Compiler=PCH
+[Target Data]
+FileList=slave.c
+[Directories]
+Include=C:\PICC\devices\;C:\PICC\drivers\;D:\Projetos\Comm\
+[slave.c]
+Type=4
+[mru-list]
+1=slave.c
+[Units]
+Count=1
+1=slave (main)

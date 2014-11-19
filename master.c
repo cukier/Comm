@@ -6,10 +6,6 @@
 
 #include "stdcom.c"
 
-enum {
-	cmd_parar, cmd_subir, cmd_descer
-};
-
 un_var dat;
 
 int main(void) {
