@@ -15,8 +15,8 @@ typedef struct str_com {
 } com_var;
 
 typedef union un_com {
-	com_var buff;
-	int package[sizeof(com_var)];
+	com_var data;
+	int str[sizeof(com_var)];
 } un_var;
 
 typedef enum comandos {

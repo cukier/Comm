@@ -1,7 +1,7 @@
 D G "__PCH__" 0 0 ""5.008""
 D G "__DEVICE__" 0 0 ""
-D G "__DATE__" 0 0 ""19-nov-14""
-D G "__TIME__" 0 0 ""18:33:33"" "Standard Header file for the PIC18F252 device ////////////////"
+D G "__DATE__" 0 0 ""23-fev-15""
+D G "__TIME__" 0 0 ""13:57:22"" "Standard Header file for the PIC18F252 device ////////////////"
 c L "set_tris_a" 1 5 16 "FUNCTION"
 v L "value" 1 31 "int8" `54 
 f B "set_tris_a" 1 31 "void(int8 value)" `53 
@@ -770,7 +770,7 @@ C L "jump_to_irs" 3 1 1 "*"
 C L "jump_to_irs" 3 1 1 "*"
 D G "STDCOM_H_" 3 9 ""
 T G "com_var" 3 15 "{int8 addr,int8 cmd,int16 data}" `610 
-T G "un_var" 3 20 "{com_var buff,int8[4] package}" `614 
+T G "un_var" 3 20 "{com_var data,int8[4] str}" `614 
 E G "cmd_parar" 3 23 "0" `616 
 E G "cmd_subir" 3 23 "1" `617 
 E G "cmd_descer" 3 24 "2" `618 
@@ -812,14 +812,15 @@ V L "dataIn" 2 34 "int16" `642
 F G "setData" 2 34 "int8(*un_var out,int16 dataIn)" `632 
 V L "out" 2 40 "un_var" `641 
 F G "sendPackage" 2 40 "int8(un_var out)" `635 
-V L "p" 2 46 "*int8" `638 
+V L "p" 2 46 "*int8" `643 
 V L "out" 2 46 "*un_var" `644 
-F G "getPackage" 2 46 "int8(*int8 p,*un_var out)" `637 
-V L "cont" 2 47 "int8" `642 
-V G "dat" 0 9 "un_var" `643 
-V G "buff" 0 10 "int8[20]" `644 
-V G "i" 0 11 "int8" `645 
-F G "MAIN" 0 13 "int8()" `646 
+F G "getstr" 2 46 "int8(*int8 p,*un_var out)" `642 
+V L "cont" 2 47 "int8" `645 
+V G "dat" 0 9 "un_var" `646 
+V G "data" 0 10 "int8[20]" `647 
+V G "i" 0 11 "int8" `648 
+F G "MAIN" 0 13 "int8()" `649 
+C L "MAIN" 0 16 2 "FUNCTION"
 F B "reset_cpu" 0 0
 F B "abs" 1 0
 F B "sleep" 0 0

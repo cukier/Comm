@@ -12,9 +12,12 @@ int main(void) {
 
 	delay_ms(1000);
 
-	setAddr(&dat, 1);
-	setCmd(&dat, cmd_descer);
-	setData(&dat, 13580);
+//	setAddr(&dat, 1);
+//	setCmd(&dat, cmd_descer);
+//	setData(&dat, 13580);
+	dat.data.addr = 1;
+	dat.data.cmd = 2;
+	dat.data.data = 34567;
 
 	sendPackage(dat);
 

@@ -7,19 +7,20 @@
 #include "stdcom.c"
 
 un_var dat;
-int buff[20];
+int data[20];
 int i;
 
 int main(void) {
 
 	while (TRUE) {
-		gets(buff);
-		getPackage(buff, &dat);
-		printf("End: %d\n\r", dat.buff.addr);
-		printf("Cmd: %d\n\r", dat.buff.cmd);
-		printf("Dat: %ld\n\r", dat.buff.data);
-		for (i = 0; i < sizeof(buff); ++i)
-			buff[i] = 0;
+//		gets(data);
+//		getstr(data, &dat);
+		gets(dat.str);
+		printf("End: %d\n\r", dat.data.addr);
+		printf("Cmd: %d\n\r", dat.data.cmd);
+		printf("Dat: %ld\n\r", dat.data.data);
+		for (i = 0; i < sizeof(data); ++i)
+			data[i] = 0;
 		delay_ms(300);
 	}
 
